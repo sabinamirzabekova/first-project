@@ -18,6 +18,7 @@ a {
     font-family: var(--font-family), monospace;
     margin: 0 auto;
     padding: 0 10%;
+    position: fixed;
 }
 
 .header {
