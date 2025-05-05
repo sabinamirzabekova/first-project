@@ -192,7 +192,7 @@ option {
     width: 0;
 }
 
-@media (width < 376px) {
+@media (width < 415px) {
     .header {
         height: 7vh;
     }
