@@ -282,6 +282,20 @@ function transposeDecrypt(text) {
   return transposeEncrypt(text); // Перестановка работает как для шифрования, так и для дешифрования
 }
 
+// Шифрование в Base64
+function base64Encrypt(text) {
+  return btoa(unescape(encodeURIComponent(text)));
+}
+
+// Дешифрование из Base64
+function base64Decrypt(encodedText) {
+  try {
+    return decodeURIComponent(escape(atob(encodedText)));
+  } catch (e) {
+    return "Ошибка: Неверный формат Base64.";
+  }
+}
+
 // Главная функция обработки
 function encryptText() {
   const cipher1 = document.getElementById("cipher1").value;
@@ -308,6 +322,8 @@ function encryptText() {
     encrypted = rotEncrypt(encrypted);
   } else if (cipher1 === "transpose") {
     encrypted = transposeEncrypt(encrypted);
+  }else if (cipher1 === "base64") {
+    encrypted = base64Encrypt(encrypted);
   }
 
   if (cipher2 && cipher2 !== 'none') {
@@ -327,7 +343,9 @@ function encryptText() {
       encrypted = rotEncrypt(encrypted);
     } else if (cipher2 === "transpose") {
       encrypted = transposeEncrypt(encrypted);
-    }  
+    } else if (cipher2 === "base64") {
+      encrypted = base64Encrypt(encrypted);
+    }
   }
 
   document.getElementById("outputText").value = encrypted;
@@ -358,8 +376,10 @@ function decryptText() {
     decrypted = rotDecrypt(decrypted);
   } else if (cipher1 === "transpose") {
     decrypted = transposeDecrypt(decrypted);
+  }else if (cipher1 === "base64") {
+    decrypted = base64Decrypt(decrypted);
   }
-
+  
   if (cipher2 && cipher2 !== 'none') {
     if (cipher2 === 'caesar') {
       decrypted = caesarDecrypt(decrypted, key2);
@@ -377,6 +397,8 @@ function decryptText() {
       decrypted = rotDecrypt(decrypted);
     } else if (cipher2 === "transpose") {
       decrypted = transposeDecrypt(decrypted);
+    }else if (cipher2 === "base64") {
+      decrypted = base64Decrypt(decrypted);
     }
   }
 
@@ -393,7 +415,7 @@ function toggleKeyFields() {
   const key1Label = document.querySelector('label[for="key1"]') || key1Field.previousElementSibling;
   const key2Label = document.querySelector('label[for="key2"]') || key2Field.previousElementSibling;
 
-  const noKeyCiphers = ['atbash', 'rot', 'transpose', 'none'];
+  const noKeyCiphers = ['atbash', 'rot', 'transpose', 'none', 'base64'];
 
   // Ключ 1
   if (noKeyCiphers.includes(cipher1)) {

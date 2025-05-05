@@ -43,6 +43,7 @@
             <option value="atbash">Атбаш</option>
             <option value="rot">ROT13/ROT11</option>
             <option value="transpose">Перестановка</option>
+            <option value="base64">Base64</option>
           </select>
           <label class="label ">Ключ для первого шифра:</label>
           <input type="text" id="key1" placeholder="Например: 3 для Цезаря, или слово для Виженера">
@@ -56,6 +57,7 @@
             <option value="atbash">Атбаш</option>
             <option value="rot">ROT13/ROT11</option>
             <option value="transpose">Перестановка</option>
+            <option value="base64">Base64</option>
           </select>
 
           <label for="keys2" class="label">Ключ для второго шифра:</label>
@@ -72,9 +74,9 @@
             <textarea class="output" id="outputText" readonly></textarea></div>
       </div>  
       </div>
-      
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsencrypt@3.0.0-rc.1/bin/jsencrypt.min.js"></script>
     <script src="index.js"></script>
   </body>
 </html>
