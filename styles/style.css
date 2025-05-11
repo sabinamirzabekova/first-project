@@ -129,16 +129,13 @@ a {
     border: none;
     outline: none;
     padding: 0.6em 0.6em;
-    /* небольшие отступы по тексту */
     display: inline-block;
     border-radius: 50px;
     background: linear-gradient(to right, #de93d4, rgba(10, 235, 238, 1));
     cursor: pointer;
     color: var(--main-text-color);
     font-size: clamp(0.9375rem, 0.8509rem + 0.3695vw, 1.25rem);
-    /* наследовать размер текста */
     line-height: 1;
-    /* убрать лишнюю высоту */
     height: auto;
     text-align: center;
 }
@@ -153,6 +150,10 @@ a {
     width: 75%;
     margin: auto;
     grid-area: content3;
+}
+
+.buttonrsa{
+    width: 100%;
 }
 
 .label {

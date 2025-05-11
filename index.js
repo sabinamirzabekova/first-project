@@ -295,6 +295,32 @@ function base64Decrypt(encodedText) {
     return "Ошибка: Неверный формат Base64.";
   }
 }
+// Генерация RSA-ключей
+function generateRSAKeys() {
+  const crypt = new JSEncrypt({ default_key_size: 2048 });
+  crypt.getKey(); // Генерация
+
+  const publicKey = crypt.getPublicKey();
+  const privateKey = crypt.getPrivateKey();
+
+  document.getElementById("rsaPublicKey").value = publicKey;
+  document.getElementById("rsaPrivateKey").value = privateKey;
+}
+
+//RSA-шифрование и дешифрование с новыми полями
+function rsaEncrypt(text, publicKey) {
+  const encryptor = new JSEncrypt();
+  encryptor.setPublicKey(publicKey);
+  const encrypted = encryptor.encrypt(text);
+  return encrypted || "Ошибка шифрования RSA.";
+}
+
+function rsaDecrypt(encryptedText, privateKey) {
+  const decryptor = new JSEncrypt();
+  decryptor.setPrivateKey(privateKey);
+  const decrypted = decryptor.decrypt(encryptedText);
+  return decrypted || "Ошибка дешифрования RSA.";
+}
 
 // Главная функция обработки
 function encryptText() {
@@ -303,6 +329,8 @@ function encryptText() {
   const key1 = document.getElementById("key1").value;
   const key2 = document.getElementById("key2").value;
   const inputText = document.getElementById("inputText").value;
+  const rsaPublicKey = document.getElementById("rsaPublicKey").value;
+  const rsaPrivateKey = document.getElementById("rsaPrivateKey").value;
 
   let encrypted = inputText;
 
@@ -324,6 +352,8 @@ function encryptText() {
     encrypted = transposeEncrypt(encrypted);
   }else if (cipher1 === "base64") {
     encrypted = base64Encrypt(encrypted);
+  }else if (cipher1 === "rsa") {
+    encrypted = rsaEncrypt(encrypted, rsaPublicKey);
   }
 
   if (cipher2 && cipher2 !== 'none') {
@@ -345,6 +375,8 @@ function encryptText() {
       encrypted = transposeEncrypt(encrypted);
     } else if (cipher2 === "base64") {
       encrypted = base64Encrypt(encrypted);
+    }else if (cipher2 === "rsa") {
+      encrypted = rsaEncrypt(encrypted, rsaPublicKey);
     }
   }
 
@@ -357,29 +389,11 @@ function decryptText() {
   const key1 = document.getElementById("key1").value;
   const key2 = document.getElementById("key2").value;
   const inputText = document.getElementById("inputText").value;
+  const rsaPrivateKey = document.getElementById("rsaPrivateKey").value;
 
   let decrypted = inputText;
 
-  if (cipher1 === "caesar") {
-    decrypted = caesarDecrypt(decrypted, key1);
-  } else if (cipher1 === "vigenere") {
-    decrypted = vigenereDecrypt(decrypted, key1);
-  } else if (cipher1 === "des") {
-    decrypted = desDecrypt(decrypted, key1);
-  } else if (cipher1 === "aes") {
-    decrypted = aesDecrypt(decrypted, key1);
-  } else if (cipher1 === "rc4") {
-    decrypted = rc4Decrypt(decrypted, key1);
-  } else if (cipher1 === "atbash") {
-    decrypted = atbashDecrypt(decrypted);
-  } else if (cipher1 === "rot") {
-    decrypted = rotDecrypt(decrypted);
-  } else if (cipher1 === "transpose") {
-    decrypted = transposeDecrypt(decrypted);
-  }else if (cipher1 === "base64") {
-    decrypted = base64Decrypt(decrypted);
-  }
-  
+  // Сначала cipher2
   if (cipher2 && cipher2 !== 'none') {
     if (cipher2 === 'caesar') {
       decrypted = caesarDecrypt(decrypted, key2);
@@ -397,9 +411,34 @@ function decryptText() {
       decrypted = rotDecrypt(decrypted);
     } else if (cipher2 === "transpose") {
       decrypted = transposeDecrypt(decrypted);
-    }else if (cipher2 === "base64") {
+    } else if (cipher2 === "base64") {
       decrypted = base64Decrypt(decrypted);
+    } else if (cipher2 === "rsa") {
+      decrypted = rsaDecrypt(decrypted, rsaPrivateKey);
     }
+  }
+
+  // Затем cipher1
+  if (cipher1 === "caesar") {
+    decrypted = caesarDecrypt(decrypted, key1);
+  } else if (cipher1 === "vigenere") {
+    decrypted = vigenereDecrypt(decrypted, key1);
+  } else if (cipher1 === "des") {
+    decrypted = desDecrypt(decrypted, key1);
+  } else if (cipher1 === "aes") {
+    decrypted = aesDecrypt(decrypted, key1);
+  } else if (cipher1 === "rc4") {
+    decrypted = rc4Decrypt(decrypted, key1);
+  } else if (cipher1 === "atbash") {
+    decrypted = atbashDecrypt(decrypted);
+  } else if (cipher1 === "rot") {
+    decrypted = rotDecrypt(decrypted);
+  } else if (cipher1 === "transpose") {
+    decrypted = transposeDecrypt(decrypted);
+  } else if (cipher1 === "base64") {
+    decrypted = base64Decrypt(decrypted);
+  } else if (cipher1 === "rsa") {
+    decrypted = rsaDecrypt(decrypted, rsaPrivateKey);
   }
 
   document.getElementById("outputText").value = decrypted;
@@ -416,9 +455,18 @@ function toggleKeyFields() {
   const key2Label = document.querySelector('label[for="key2"]') || key2Field.previousElementSibling;
 
   const noKeyCiphers = ['atbash', 'rot', 'transpose', 'none', 'base64'];
+  
+  const rsaBlock = document.getElementById("rsaKeysContainer");
+  if (cipher1 === "rsa" || cipher2 === "rsa") {
+    rsaBlock.style.display = "";
+    key1Field.style.display = 'none';
+    key1Label.style.display = 'none';
+  } else {
+    rsaBlock.style.display = "none";
+  }
 
   // Ключ 1
-  if (noKeyCiphers.includes(cipher1)) {
+  if (noKeyCiphers.includes(cipher1) || cipher1 === "rsa" ) {
     key1Field.style.display = 'none';
     key1Label.style.display = 'none';
   } else {
@@ -427,7 +475,7 @@ function toggleKeyFields() {
   }
 
   // Ключ 2
-  if (noKeyCiphers.includes(cipher2)) {
+  if (noKeyCiphers.includes(cipher2) || cipher2 === "rsa") {
     key2Field.style.display = 'none';
     key2Label.style.display = 'none';
   } else {

@@ -1,82 +1,97 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="fonts/fonts.css">
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/style.css">
-    <title>Cipher code</title>
-  </head>
-  <body class="page">
-    <header class="header">
-      <h1 class="header-title">Cipher code</h1>
-      <nav class="header-menu">
-        <ul class="header-menu__list">
-          <li class="header-menu__item">
-            <a href="#">Главная</a>
-          </li>
-          <li class="header-menu__item">
-            <a href="preo.html">Преобразования</a>
-          </li>
-          <li class="header-menu__item">
-            <a href="contact.html">Контакты</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <main class="main">
-      <img class="image__robot" src="images/acetone-2025421-15348-522.png">
-      <img class="image__gradient1" src="images/Ellipse 1.png">
-      <img class="image__gradient2" src="images/Ellipse 2.png">
-      <img class="image__gradient3" src="images/Ellipse 10.png">
-      <div class="container">
-        <h2 class="container__text">Зашифруй</h2>
-        <div class="box">
-          <select id="cipher1" class="button button__text">
-            <option value="caesar">Цезарь</option>
-            <option value="vigenere">Виженер</option>
-            <option value="des">DES</option>
-            <option value="aes">AES</option>
-            <option value="rc4">RC4</option>
-            <option value="atbash">Атбаш</option>
-            <option value="rot">ROT13/ROT11</option>
-            <option value="transpose">Перестановка</option>
-            <option value="base64">Base64</option>
-          </select>
-          <label class="label ">Ключ для первого шифра:</label>
-          <input type="text" id="key1" placeholder="Например: 3 для Цезаря, или слово для Виженера">
-          <select id="cipher2" onchange="toggleKey2Field()" class="button button__text button__text1">
-            <option value="none" selected>Нет второго шифра</option>
-            <option value="caesar">Цезарь</option>
-            <option value="vigenere">Виженер</option>
-            <option value="des">DES</option>
-            <option value="aes">AES</option>
-            <option value="rc4">RC4</option>
-            <option value="atbash">Атбаш</option>
-            <option value="rot">ROT13/ROT11</option>
-            <option value="transpose">Перестановка</option>
-            <option value="base64">Base64</option>
-          </select>
 
-          <label for="keys2" class="label">Ключ для второго шифра:</label>
-          <input type="text" id="key2" placeholder="Введите ключ">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Cipher code</title>
+</head>
 
-          <button onclick="encryptText()" class="button button__last">🔒 Зашифровать</button>
-          <button onclick="decryptText()" class="button button__descript">Расшифровать</button>
-          <div class="pole1">
-              <label class="label">Введите текст:</label>
-              <textarea class="input" id="inputText" placeholder="Введите текст для шифрования..."></textarea>
-            </div>
-          <div class="pole">
-            <label class="label">Результат:</label>
-            <textarea class="output" id="outputText" readonly></textarea></div>
-      </div>  
+<body class="page">
+  <header class="header">
+    <h1 class="header-title">Cipher code</h1>
+    <nav class="header-menu">
+      <ul class="header-menu__list">
+        <li class="header-menu__item">
+          <a href="#">Главная</a>
+        </li>
+        <li class="header-menu__item">
+          <a href="preo.html">Преобразования</a>
+        </li>
+        <li class="header-menu__item">
+          <a href="contact.html">Контакты</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main">
+    <img class="image__robot" src="images/acetone-2025421-15348-522.png">
+    <img class="image__gradient1" src="images/Ellipse 1.png">
+    <img class="image__gradient2" src="images/Ellipse 2.png">
+    <img class="image__gradient3" src="images/Ellipse 10.png">
+    <div class="container">
+      <h2 class="container__text">Зашифруй</h2>
+      <div class="box">
+        <select id="cipher1" class="button button__text">
+          <option value="caesar">Цезарь</option>
+          <option value="vigenere">Виженер</option>
+          <option value="des">DES</option>
+          <option value="aes">AES</option>
+          <option value="rc4">RC4</option>
+          <option value="atbash">Атбаш</option>
+          <option value="rot">ROT13/ROT11</option>
+          <option value="transpose">Перестановка</option>
+          <option value="base64">Base64</option>
+          <option value="rsa">RSA</option>
+        </select>
+        <label class="label ">Ключ для первого шифра:</label>
+        <input type="text" id="key1" placeholder="Например: 3 для Цезаря, или слово для Виженера">
+        <select id="cipher2" onchange="toggleKey2Field()" class="button button__text button__text1">
+          <option value="none" selected>Нет второго шифра</option>
+          <option value="caesar">Цезарь</option>
+          <option value="vigenere">Виженер</option>
+          <option value="des">DES</option>
+          <option value="aes">AES</option>
+          <option value="rc4">RC4</option>
+          <option value="atbash">Атбаш</option>
+          <option value="rot">ROT13/ROT11</option>
+          <option value="transpose">Перестановка</option>
+          <option value="base64">Base64</option>
+          <option value="rsa">RSA</option>
+        </select>
+
+        <label for="keys2" class="label">Ключ для второго шифра:</label>
+        <input type="text" id="key2" placeholder="Введите ключ">
+        <!-- Блок для RSA ключей -->
+        <div id="rsaKeysContainer" style="display: none;">
+          <label for="rsaPublicKey" class="label lablrsa">Открытый ключ RSA:</label>
+          <textarea id="rsaPublicKey" class="input inputrsa" placeholder="Вставьте открытый ключ..."></textarea>
+
+          <label for="rsaPrivateKey" class="label labelrsa2">Закрытый ключ RSA:</label>
+          <textarea id="rsaPrivateKey" class="input inputrsa2" placeholder="Вставьте закрытый ключ..."></textarea>
+
+          <button type="button" onclick="generateRSAKeys()" class="button buttonrsa">🔑 Сгенерировать RSA ключи</button>
+        </div>
+        <button onclick="encryptText()" class="button button__last">🔒 Зашифровать</button>
+        <button onclick="decryptText()" class="button button__descript">Расшифровать</button>
+        <div class="pole1">
+          <label class="label">Введите текст:</label>
+          <textarea class="input" id="inputText" placeholder="Введите текст для шифрования..."></textarea>
+        </div>
+        <div class="pole">
+          <label class="label">Результат:</label>
+          <textarea class="output" id="outputText" readonly></textarea>
+        </div>
       </div>
-    </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsencrypt@3.0.0-rc.1/bin/jsencrypt.min.js"></script>
-    <script src="index.js"></script>
-  </body>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsencrypt@3.0.0-rc.1/bin/jsencrypt.min.js"></script>
+  <script src="index.js"></script>
+</body>
+
 </html>
