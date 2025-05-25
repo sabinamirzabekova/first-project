@@ -208,7 +208,7 @@ option {
     .image__robot {
         position: absolute;
         top: 55%;
-        left: 40%;
+        left: 0;
         width: 30vh;
         z-index: 0;
         display: block;

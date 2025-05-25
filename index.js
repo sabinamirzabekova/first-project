@@ -141,6 +141,7 @@ function vigenereDecrypt(text, keyword) {
   return result;
 }
 
+
 // "DES" (упрощённая XOR-имитация)
 function desEncrypt(text, key) {
   if (!key) return text;
@@ -186,13 +187,6 @@ function aesEncrypt(text, key) {
 }
 
 // Функция для дешифрования текста с использованием AES
-function aesDecrypt(encryptedText, key) {
-  const bytes = CryptoJS.AES.decrypt(encryptedText, key);
-  return bytes.toString(CryptoJS.enc.Utf8);
-}
-
-
-// Функция для расшифрования текста с использованием AES
 function aesDecrypt(encryptedText, key) {
   const bytes = CryptoJS.AES.decrypt(encryptedText, key);
   return bytes.toString(CryptoJS.enc.Utf8);
