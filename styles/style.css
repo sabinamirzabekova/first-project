@@ -217,7 +217,7 @@ option {
     .image__gradient1 {
         position: absolute;
         top: -15vh;
-        left: 15vh;
+        left: 10vh;
         width: 35vh;
         z-index: -1;
     }
@@ -225,7 +225,7 @@ option {
     .image__gradient2 {
         position: absolute;
         top: 0;
-        right: -10vh;
+        right: 0;
         z-index: -1;
     }
     
