@@ -195,7 +195,7 @@ option {
 
 @media (width < 431px) {
     .header {
-        height: 7vh;
+        height: 8vh;
     }
     .header-title {
         font-size: 20px;
@@ -224,8 +224,9 @@ option {
     
     .image__gradient2 {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 50vh;
+        right: 20vh;
+        width: 40vh;
         z-index: -1;
     }
     
